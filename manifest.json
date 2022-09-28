@@ -1,0 +1,25 @@
+{
+
+    "manifest_version": 2,
+    "name": "RMPPlugin",
+    "version": "1.0",
+  
+    "description": "Adds RMP rating to univesity pages.",
+  
+    "icons": {
+      "48": "icon-48.png"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*.owlexpress.kennesaw.edu/prodban/*"],
+        "js": ["index.js"]
+      }
+    ], 
+    
+    "permissions": [
+        "*://www.ratemyprofessors.com/*",
+        "*://rmp1.netlify.app/*"
+    ]
+  
+}
