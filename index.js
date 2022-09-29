@@ -1,10 +1,6 @@
-/*
-document.body.style.border = "5px solid red"; // During development shows that the extension loaded.
-console.clear();
-console.log("Start 1")
-*/
 
-// Selected schoolID. Tells us what university we're looking for.
+
+// Selected schoolID. Tells RMP what university we're looking for.
 const SCHOOLID = "U2Nob29sLTQ4MQ=="
 
 // With a given name fetch the teacher information.
@@ -39,7 +35,7 @@ async function fetchProfessor(name) {
     }
 }
 
-// Example of mutliple matches https://www.ratemyprofessors.com/search/teachers?query=Susan%20Young&sid=U2Nob29sLTQ4MQ==
+// Example of multiple matches https://www.ratemyprofessors.com/search/teachers?query=Susan%20Young&sid=U2Nob29sLTQ4MQ==
 // Probably just have it link to query.
 // Picks out the teacher object from the graphql response
 function processReturn(returnObject) {
@@ -73,7 +69,7 @@ function getAllMailLinks() {
     return linkArray;
 }
 
-// Find all unique names to reduce duplicate querries
+// Find all unique names to reduce duplicate queries to RMP
 function findUniqueNames(links) {
     let uniqueNames = new Set();
     links.forEach((link) => {
@@ -92,12 +88,12 @@ function insertRating(link, teacherObject) {
     } else if (teacherObject.hasOwnProperty("multipleMatches")) {
         newTDTag.innerHTML = `<a href="https://www.ratemyprofessors.com/search/teachers?query=${encodeURIComponent(link.target)}&sid=${SCHOOLID}" rel="noreferrer noopener" target="_blank" style="font-size: 90%">${teacherObject.multipleMatches} Teachers with that name</a>`
     } else {
-        // Check if there is a take again procentage if not there is none.
+        // Check if there is a take again percentage if not there is none.
         if (teacherObject.wouldTakeAgainPercent === -1) {
-            // No procentage
+            // No percentage
             newTDTag.innerHTML = `<a href="https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${teacherObject.legacyId}" rel="noreferrer noopener" target="_blank" style="font-size: 90%">Quality ${teacherObject.avgRating}/5<br>Difficulty ${teacherObject.avgDifficulty}%</a>`
         } else {
-            // There is a procentage
+            // There is a percentage
             let wouldTakeAgain = Math.round(teacherObject.wouldTakeAgainPercent);
             newTDTag.innerHTML = `<a href="https://www.ratemyprofessors.com/ShowRatings.jsp?tid=${teacherObject.legacyId}" rel="noreferrer noopener" target="_blank" style="font-size: 90%">Quality ${teacherObject.avgRating}/5<br>Difficulty ${teacherObject.avgDifficulty}/5<br>Would take again ${wouldTakeAgain}%</a>`
         }
